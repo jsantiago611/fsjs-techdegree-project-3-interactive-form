@@ -22,6 +22,7 @@ const name = document.querySelector('form #name');
 const email = document.querySelector('form #mail');
 const jobRole = document.querySelector('form #title');
 const activityLegend = document.querySelector('form .actitity-legend')
+const paymentLegend = document.querySelector('form .payment-legend')
 const dropDown1 = jobRole.querySelectorAll('option')[0];
 const dropDown2 = jobRole.querySelectorAll('option')[1];
 const dropDown3 = jobRole.querySelectorAll('option')[2];
@@ -33,6 +34,8 @@ const submit = document.querySelector('button');
 
 
 // J O B   R O L E ---------------------------------------------------->
+
+$("#non-js-title").hide();
 
 function getSelectValue() {
   var selectedValue =  document.getElementById("title").value;
@@ -78,36 +81,59 @@ function getSelectValue() {
 
     const design = document.getElementById('design');
     const color = document.getElementById('colors-js-puns');
+    const colorDiv = document.querySelector('#color');
+    const colorOptions = document.querySelector('#color option');
+    const $tomato = $('#color option[value="tomato"]');
+    const $steelBlue = $('#color option[value="steelblue"]');
+    const $dimGrey = $('#color option[value="dimgrey"]');
+    const $cornFlowerBlue = $('#color option[value="cornflowerblue"]');
+    const $darkGrey = $('#color option[value="darkslategrey"]');
+    const $gold = $('#color option[value="gold"]');
+    const $selectColors = $(".selectColors");
+    const jsPunColors = document.getElementsByClassName(".jsPunColors");
+    const heartJsColors = document.getElementsByClassName(".heartJsColors");
 
-//hide color div on pageload
+    //hide color div on pageload
     $(".colors-js-puns").hide();
     color.style.display = "none";
 
+    const clearColorOptions = () => {
+      $('#color option[value="cornflowerblue"]').remove();
+      $('#color option[value="darkslategrey"]').remove();
+      $('#color option[value="gold"]').remove();
+      $('#color option[value="tomato"]').remove();
+      $('#color option[value="steelblue"]').remove();
+      $('#color option[value="dimgrey"]').remove();
+      $('#color option[value="selecttheme"]').remove();
+    }
+
 //When user clicks for design option...
-design.addEventListener("click", function() {
-  //If user selects "Puns..."
-  if(design.value === "js puns") {
-    $('#color option[value="tomato"]').hide();
-    $('#color option[value="steelblue"]').hide();
-    $('#color option[value="dimgrey"]').hide();
-    $('#color option[value="cornflowerblue"]').show();
-    $('#color option[value="darkslategrey"]').show();
-    $('#color option[value="gold"]').show();
-    color.style.display = "block";
+$($("#design")).on("change", function () {
+
+    //If user selects "Puns..."
+    if(design.value === "js puns") {
+      clearColorOptions();
+      color.style.display = "block";
+      console.log("working");
+      $('#color').append("<option class='jsPunColors' value='cornflowerblue'>Cornflower Blue (JS Puns shirt only)</option>");
+      $('#color').append("<option class='jsPunColors' value='darkslategrey'>Dark Slate Grey (JS Puns shirt only)</option>");
+      $('#color').append("<option class='jsPunColors' value='gold'>Gold (JS Puns shirt only)</option>");
+      }
+
     //If user selects "Heart" design
- } else if (design.value === "heart js") {
-    $('#color option[value="cornflowerblue"]').hide();
-    $('#color option[value="darkslategrey"]').hide();
-    $('#color option[value="gold"]').hide();
-    $('#color option[value="tomato"]').show();
-    $('#color option[value="steelblue"]').show();
-    $('#color option[value="dimgrey"]').show();
-    color.style.display = "";
+    else if (design.value === "heart js") {
+      clearColorOptions();
+      color.style.display = "";
+      console.log("heart is working");
+      $('#color').append('<option class="heartJsColors" value="tomato">Tomato (I &#9829; JS shirt only)</option>');
+      $('#color').append('<option class="heartJsColors" value="steelblue">Steel Blue (I &#9829; JS shirt only)</option>');
+      $('#color').append('<option class="heartJsColors" value="dimgrey">Dim Grey (I &#9829; JS shirt only)</option>');
+
     //if user selects nothing...
- } else {
-   color.style.display = 'none';
- };
-});
+     } else {
+       color.style.display = 'none';
+     }});
+
 
 //R E G I S T E R   F O R   A C T I V I T I E S=====================
 
@@ -141,7 +167,7 @@ design.addEventListener("click", function() {
             });
 
             //LIVE REGISTRATION VALIDATION
-            var regValidation = function() {
+            function regValidation() {
               var n = $("input:checked").length;
               if (n === 0) {
                 $(".totalDiv").addClass('is-hidden');
@@ -153,8 +179,7 @@ design.addEventListener("click", function() {
                 activityLegend.classList.remove('errorText');
               }};
 
-            $("input:checkbox").on ("click", regValidation);
-
+              $("input:checkbox").on ("click", regValidation );
 
     //4. Account for event overlaps.
 
@@ -204,7 +229,6 @@ design.addEventListener("click", function() {
   const creditCard = document.querySelector("#credit-card");
   const payPal = document.querySelectorAll("fieldset div p")[0];
   const bitcoin = document.querySelectorAll("fieldset div p")[1];
-
   const ccNumber = document.getElementById("cc-num");
   const zip = document.getElementById("zip");
   const cvv = document.getElementById("cvv");
@@ -216,16 +240,18 @@ design.addEventListener("click", function() {
     $(bitcoin).hide();
     $(payPal).hide();
 
-
-
     //Display payment sections based on payment option selectedValue
-
   paymentDiv.addEventListener('change', (e) => {
     if (e.target.value === 'credit card') {
       payPal.style.display = 'none';
       creditCard.style.display = 'block';
       bitcoin.style.display = 'none';
       console.log("cc selected");
+      finalCCVal();
+      finalCVVVal();
+      finalZipVal();
+      paymentLegend.innerText = "Payment Info";
+      paymentLegend.classList.remove('errorText');
     }
 
     if (e.target.value === 'paypal') {
@@ -233,6 +259,8 @@ design.addEventListener("click", function() {
       creditCard.style.display = 'none';
       bitcoin.style.display = 'none';
       console.log("pp selected");
+      paymentLegend.innerText = "Payment Info";
+      paymentLegend.classList.remove('errorText');
     }
 
     if (e.target.value === 'bitcoin') {
@@ -240,6 +268,8 @@ design.addEventListener("click", function() {
       creditCard.style.display = 'none';
       bitcoin.style.display = 'block';
       console.log("bc selected");
+      paymentLegend.innerText = "Payment Info";
+      paymentLegend.classList.remove('errorText');
     }
   });
 
@@ -345,6 +375,8 @@ paymentVal();
         errorName();
       });
 
+      const emailVal = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
     //Email field
     function errorEmail() {
         console.log(name);
@@ -383,22 +415,45 @@ paymentVal();
       });
 
 // Final validation on submit button
-submit.addEventListener('click', (e) => {
-  console.log('submit has been clicked');
-  if ( errorName() && errorEmail() && regValidation && finalCVVVal() && finalCCVal() && finalZipVal() ) {
+
+//Checks for name and email validation
+form.addEventListener('submit', (e) => {
+  console.log("submit has been clicked");
+  if ( !errorName() || !errorEmail() ) {
+    console.log('name or email has not run');
     errorName();
     errorEmail();
-    regValidation;
-    finalCVVVal();
-    finalCCVal();
-    finalZipVal();
-    } else {
     e.preventDefault();
-    errorName();
-    errorEmail();
-    regValidation;
-    finalCVVVal();
+  }
+  //Prevents form from submitting if Credit Card info is not filled out.
+  if ($('#payment option[value="credit card"]').is(':selected')) {
     finalCCVal();
+    finalCVVVal();
     finalZipVal();
+    console.log("cc worked")
+    if ( !finalCCVal() || !finalCVVVal() || !finalZipVal() ){
+      e.preventDefault();
     }
+    paymentLegend.innerText = "Payment Info";
+    paymentLegend.classList.remove('errorText');
+  } else if ($('#payment option[value="paypal"]').is(':selected')) {
+   console.log("paypal selected");
+   paymentLegend.innerText = "Payment Info";
+   paymentLegend.classList.remove('errorText');
+  } else if ($('#payment option[value="bitcoin"]').is(':selected')) {
+   console.log("bitcoin selected");
+   paymentLegend.innerText = "Payment Info";
+   paymentLegend.classList.remove('errorText');
+ } else {
+   paymentLegend.innerText = "Please Choose a Payment Method";
+   paymentLegend.classList.add('errorText');
+ }
+
+  //Checks for event registration
+  if ($('input:checked').length === 0) {
+    e.preventDefault();
+    console.log("event reg is not selected")
+    activityLegend.innerText = "Please choose an activity.";
+    activityLegend.classList.add('errorText');
+  }
 })
