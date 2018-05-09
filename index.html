@@ -38,8 +38,8 @@
           <option value="student">Student</option>
           <option value="other">Other</option>
         </select>
-
         <div id="div1"></div>
+        <input type="text" id="non-js-title" placeholder="Your Job Role"></input>
 
 
       </fieldset>
@@ -69,13 +69,13 @@
         <div id="colors-js-puns" class="">
           <label for="color">Color:</label>
           <select id="color">
-            <option value="" name="default">Select Color</option>
-            <option value="cornflowerblue">Cornflower Blue (JS Puns shirt only)</option>
-            <option value="darkslategrey">Dark Slate Grey (JS Puns shirt only)</option>
-            <option value="gold">Gold (JS Puns shirt only)</option>
-            <option value="tomato">Tomato (I &#9829; JS shirt only)</option>
-            <option value="steelblue">Steel Blue (I &#9829; JS shirt only)</option>
-            <option value="dimgrey">Dim Grey (I &#9829; JS shirt only)</option>
+            <option class="selectColors" value="default" name="default">Select Color</option>
+            <option class="jsPunColors" value="cornflowerblue">Cornflower Blue (JS Puns shirt only)</option>
+            <option class="jsPunColors" value="darkslategrey">Dark Slate Grey (JS Puns shirt only)</option>
+            <option class="jsPunColors" value="gold">Gold (JS Puns shirt only)</option>
+            <option class="heartJsColors" value="tomato">Tomato (I &#9829; JS shirt only)</option>
+            <option class="heartJsColors" value="steelblue">Steel Blue (I &#9829; JS shirt only)</option>
+            <option class="heartJsColors" value="dimgrey">Dim Grey (I &#9829; JS shirt only)</option>
           </select>
         </div>
       </fieldset>
@@ -92,11 +92,11 @@
 
       </fieldset>
       <fieldset id="payment">
-        <legend>Payment Info</legend>
+        <legend class="payment-legend">Payment Info</legend>
 
         <label for="payment">I'm going to pay with:</label>
         <select id="payment" name="user_payment">
-          <option value="select_method">Select Payment Method</option>
+          <option hidden value="select_method">Select Payment Method</option>
           <option value="credit card">Credit Card</option>
           <option value="paypal">PayPal</option>
           <option value="bitcoin">Bitcoin</option>
